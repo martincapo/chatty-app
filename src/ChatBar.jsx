@@ -8,8 +8,10 @@ class ChatBar extends Component {
   }
 
   handleKeyPress = (event) => {
+    //console.log(this.props);
     if(event.key == 'Enter'){
-      this.props.handleChange(this.state.value);
+      this.props._addMessage(this.state);
+      this.setState({value: ''});
     }
   }
 

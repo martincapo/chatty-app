@@ -21,6 +21,11 @@ wss.on('connection', (ws) => {
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => console.log('Client disconnected'));
+
+  ws.on('message', (message) => {
+    var msg = JSON.parse(message);
+    console.log(msg);
+  });
 });
 
 var webpack = require('webpack');
