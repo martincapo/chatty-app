@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Message from './Message.jsx'
 
-
+// Container of messages
 class MessageList extends Component {
 
   render() {

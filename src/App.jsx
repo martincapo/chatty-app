@@ -10,14 +10,13 @@ class App extends Component {
     this.state = {
       userCounts: 0,
       fontColor: "#000",
-      currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: {name: "Anonymous"}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [] // messages coming from the server will be stored here as they arrive
     }
   }
 
 
   componentDidMount() {
-
     console.log("componentDidMount <App />");
 
     this.appSocket = new WebSocket("ws://localhost:3001");

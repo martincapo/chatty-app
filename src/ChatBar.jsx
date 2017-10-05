@@ -7,20 +7,24 @@ class ChatBar extends Component {
     this.state = {type: 'postMessage', username: this.props.currentUser, content: ''};
   }
 
+  // When user hit enter
   handleKeyPress = (event) => {
     if(event.key == 'Enter'){
+      // When text has img link
       if(this._isImageLink(this.state.content)) {
         this._addImageMessage(this.state);
+      // Regular text
       } else {
         this.props._addMessage(this.state);
       }
-      this._clientNameChanged(this.state.username);
+      // Check if username has been changed
+      this._userNameChanged(this.state.username);
       this.setState({content: ''});
     }
   }
 
   // When user change their name, will be notified to every peers.
-  _clientNameChanged = (username) => {
+  _userNameChanged = (username) => {
     if(this.props.currentUser !== username) {
       this.props._addMessage({
         type: "postNotification",
@@ -52,7 +56,6 @@ class ChatBar extends Component {
     return (
       <footer className="chatbar">
         <input className="chatbar-username" placeholder="Your Name (Optional)"
-          defaultValue={this.props.currentUser}
           onKeyPress={(e) => this.handleKeyPress(e)}
           onChange={(e) => this.setState({username: e.target.value }) }
         />

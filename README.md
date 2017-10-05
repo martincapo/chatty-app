@@ -1,45 +1,49 @@
-React Boilerplate
-=====================
+# Chatty App
 
-A minimal and light dev environment for ReactJS.
+Chatty will allow users to communicate with each other without having to register accounts. It will use React, a popular front-end library created and used heavily by Facebook as well as modern tools for Node including Webpack and Babel.
 
-### Usage
+## Screenshot
 
-Clone the boilerplate and create your own git repo.
+!["Screenshot description"](URL)
 
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
 
-Install the dependencies and start the server.
+## Getting Started
 
-```
-npm install
-npm start
-open http://localhost:3000
-```
+1. Fork and clone your fork of this repository.
+2. Install dependencies: `npm install` or `npm i` for short.
+3. From the root project folder, launch the chat application: `npm start`
+4. Navigate to the chatty-app/chatty_server/ directory and start the server: `npm start`
+5. Open http://localhost:3000 in your browser
 
-### Static Files
+## Primary Functionalities
 
-You can store static files like images, fonts, etc in the `build` folder.
+* Any connected user can send a chat message. And all connected users receive the message.
+* User can send message with or without name
+* User can change their names any time. When use change their names, all connected users receive the notification.
+* User can send message with image of URL. And all connected users recevice the message with image.
 
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
 
-### Linting
+## devDependencies
 
-This boilerplate project includes React ESLint configuration.
+* babel-core
+* babel-loader
+* babel-preset-es2015
+* babel-preset-react
+* babel-preset-stage-0
+* css-loader
+* eslint
+* eslint-plugin-react
+* node-sass
+* react
+* react-dom
+* sass-loader
+* sockjs-client
+* style-loader
+* webpack
+* webpack-dev-serve
 
-```
-npm run lint
-```
+## Dependencies
 
-### Dependencies
-
-* React
-* Webpack
-* [babel-loader](https://github.com/babel/babel-loader)
-* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+* Express.js
+* [WebSockets](https://github.com/websockets/ws)
+* UUID
