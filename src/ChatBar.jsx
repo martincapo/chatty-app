@@ -32,21 +32,18 @@ class ChatBar extends Component {
   }
 
   _isImageLink = (content) => {
-    let parts = content.split('.');
-    let imgFileType = parts.pop().toLowerCase();
-
-    if(imgFileType === 'jpg' || imgFileType === 'png' || imgFileType === 'gif') {
-      return true;
-    } else {
-      return false;
-    }
+    return (content.match(/((https?|ftp):)?\/\/.*(jpeg|jpg|png|gif)$/) !== null);
   }
 
+
   _addImageMessage = (data) => {
+    let parts = data.content.match(/((https?|ftp):)?\/\/.*(jpeg|jpg|png|gif)$/);
+    let content = data.content.replace(parts[0], '');
     this.props._addMessage({
         type: "postImage",
         username: data.username,
-        content: data.content
+        content: content,
+        imgUrl: parts[0]
       });
   }
 

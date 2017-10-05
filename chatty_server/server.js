@@ -95,6 +95,7 @@ _setImageLink = (msg, msgID) => {
     id: msgID,
     username: msg.username,
     content: msg.content,
+    imgUrl: msg.imgUrl,
     fontColor: msg.fontColor
   });
 }
