@@ -4,7 +4,9 @@ class Message extends Component {
 
   render() {
     console.log("Rendering <Message/>");
-    const {type, username, content} = this.props;
+    const {type, fontColor, username, content} = this.props;
+
+    let color = {color: fontColor};
 
 
     if(type === 'incomingNotification') {
@@ -15,7 +17,7 @@ class Message extends Component {
     } else {
       return (
             <div className="message">
-              <span className="message-username">{ username }</span>
+              <span className="message-username" style={color}>{ username }</span>
               <span className="message-content">{ content }</span>
             </div>
           );

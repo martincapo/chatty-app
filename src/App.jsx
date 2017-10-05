@@ -9,6 +9,7 @@ class App extends Component {
     super(props);
     this.state = {
       userCounts: 0,
+      fontColor: "#000",
       currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [] // messages coming from the server will be stored here as they arrive
     }
@@ -26,6 +27,8 @@ class App extends Component {
 
       if (newMessage.type === 'userCountChanged') {
         this.setState({userCounts: newMessage.userCount});
+      } else if(newMessage.type === 'fontColor') {
+        this.setState({fontColor: newMessage.fontColor});
       } else {
         const messages = this.state.messages.concat(newMessage)
         this.setState({messages: messages});
@@ -36,6 +39,7 @@ class App extends Component {
   // Send the msg object as a JSON-formatted string.
   _addMessage = (msg) => {
     console.log('Sending to server: ', msg);
+    msg['fontColor'] = this.state.fontColor;
     this.appSocket.send(JSON.stringify(msg));
   }
 

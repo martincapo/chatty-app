@@ -19,6 +19,7 @@ const wss = new SocketServer({ server });
 // Currently connected clients
 let clients = [];
 let clientCount = 0;
+let colorList = ['#000080', '#B22222', '#228B22', '#9400D3'];
 
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
@@ -29,12 +30,12 @@ wss.on('connection', (client) => {
   clientCount ++;
   _broadcast(JSON.stringify(_setUserCount(clientCount)));
 
+  client.send(JSON.stringify(_setFontColor(clientCount)));
+
   // Initialize a new msg id
   const msgID = uuid();
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-// socket.on('connect', function() { connectCounter++; });
-// socket.on('disconnect', function() { connectCounter--; });
   client.on('message', (message) => {
     var msg = JSON.parse(message);
 
@@ -44,7 +45,7 @@ wss.on('connection', (client) => {
         break;
 
       case 'postNotification':
-        wss._broadcast(JSON.stringify(_setNotification(msg)));
+        _broadcast(JSON.stringify(_setNotification(msg)));
         break;
 
       default:
@@ -78,7 +79,8 @@ _setMessage = (msg, msgID) => {
     type: "incomingMessage",
     id: msgID,
     username: msg.username,
-    content: msg.content
+    content: msg.content,
+    fontColor: msg.fontColor
   });
 }
 
@@ -95,3 +97,12 @@ _setUserCount = (userCount) => {
     userCount: userCount
   })
 }
+
+_setFontColor = (userCount) => {
+  return ({
+    type: "fontColor",
+    fontColor: colorList[userCount%colorList.length]
+  })
+}
+
+
