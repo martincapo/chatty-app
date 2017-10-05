@@ -9,7 +9,6 @@ class ChatBar extends Component {
 
   handleKeyPress = (event) => {
     if(event.key == 'Enter'){
-      console.log('My state is: ', this.state);
       if(this._isImageLink(this.state.content)) {
         this._addImageMessage(this.state);
       } else {
@@ -20,6 +19,7 @@ class ChatBar extends Component {
     }
   }
 
+  // When user change their name, will be notified to every peers.
   _clientNameChanged = (username) => {
     if(this.props.currentUser !== username) {
       this.props._addMessage({
@@ -30,12 +30,12 @@ class ChatBar extends Component {
       this.props._setCurrentUser(username);
     }
   }
-
+  // Check if user message has img url
   _isImageLink = (content) => {
     return (content.match(/((https?|ftp):)?\/\/.*(jpeg|jpg|png|gif)$/) !== null);
   }
 
-
+  // Make a message with text + img
   _addImageMessage = (data) => {
     let parts = data.content.match(/((https?|ftp):)?\/\/.*(jpeg|jpg|png|gif)$/);
     let content = data.content.replace(parts[0], '');

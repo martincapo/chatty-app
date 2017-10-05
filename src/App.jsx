@@ -21,14 +21,16 @@ class App extends Component {
     console.log("componentDidMount <App />");
 
     this.appSocket = new WebSocket("ws://localhost:3001");
-
+    // message received from server
     this.appSocket.onmessage = (event) => {
       const newMessage = JSON.parse(event.data);
-
+      // When online user's number has been changed
       if (newMessage.type === 'userCountChanged') {
         this.setState({userCounts: newMessage.userCount});
+      // When user's font color has been set
       } else if(newMessage.type === 'fontColor') {
         this.setState({fontColor: newMessage.fontColor});
+      // When user send message (text or text + img)
       } else {
         const messages = this.state.messages.concat(newMessage)
         this.setState({messages: messages});
@@ -38,11 +40,10 @@ class App extends Component {
 
   // Send the msg object as a JSON-formatted string.
   _addMessage = (msg) => {
-    console.log('Sending to server: ', msg);
     msg['fontColor'] = this.state.fontColor;
     this.appSocket.send(JSON.stringify(msg));
   }
-
+  // Set current user when client change their name
   _setCurrentUser = (user) => {
     this.setState({currentUser: {name: user}});
   }

@@ -19,6 +19,7 @@ const wss = new SocketServer({ server });
 // Currently connected clients
 let clients = [];
 let clientCount = 0;
+// TODO: add more colors for user's color
 let colorList = ['#000080', '#B22222', '#228B22', '#9400D3'];
 
 // Set up a callback that will run when a client connects to the server
@@ -28,8 +29,9 @@ wss.on('connection', (client) => {
   console.log('Client connected');
 
   clientCount ++;
+  // Send online users number to all peers
   _broadcast(JSON.stringify(_setUserCount(clientCount)));
-
+  // Send font color of current user to all peers
   client.send(JSON.stringify(_setFontColor(clientCount)));
 
   // Initialize a new msg id
@@ -40,14 +42,15 @@ wss.on('connection', (client) => {
     var msg = JSON.parse(message);
 
     switch(msg.type) {
+      // send text message
       case 'postMessage':
         _broadcast(JSON.stringify(_setMessage(msg, msgID)));
         break;
-
+      // send notification
       case 'postNotification':
         _broadcast(JSON.stringify(_setNotification(msg)));
         break;
-
+      // send text with image
       case 'postImage':
         _broadcast(JSON.stringify(_setImageLink(msg, msgID)));
         break;
@@ -58,7 +61,7 @@ wss.on('connection', (client) => {
     }
   });
 
-
+  // Client close the app (tab or window)
   client.on('close', () => {
     console.log('Client disconnected')
     clientCount --;
@@ -76,9 +79,8 @@ _broadcast = (data) => {
   });
 }
 
-// Connection event
+// Set msg data
 _setMessage = (msg, msgID) => {
-  // Create msg data
   return ({
     type: "incomingMessage",
     id: msgID,
@@ -88,8 +90,8 @@ _setMessage = (msg, msgID) => {
   });
 }
 
+// Set msg + img data
 _setImageLink = (msg, msgID) => {
-  // Create msg data
   return ({
     type: "incomingImage",
     id: msgID,
@@ -100,6 +102,7 @@ _setImageLink = (msg, msgID) => {
   });
 }
 
+// Set notification
 _setNotification = (msg) => {
   return ({
     type: "incomingNotification",
@@ -107,6 +110,7 @@ _setNotification = (msg) => {
   });
 }
 
+// Set number of users online
 _setUserCount = (userCount) => {
   return ({
     type: "userCountChanged",
@@ -114,6 +118,7 @@ _setUserCount = (userCount) => {
   })
 }
 
+// Set font color of each user
 _setFontColor = (userCount) => {
   return ({
     type: "fontColor",
