@@ -14,6 +14,15 @@ class Message extends Component {
                 { content }
               </div>
              );
+    } else if (type === 'incomingImage') {
+
+      return (<div className="message">
+                <span className="message-username" style={color}>{ username }</span>
+                <span className="message-content">
+                  <img className="img" src={ content } />
+                </span>
+              </div>
+            );
     } else {
       return (
             <div className="message">

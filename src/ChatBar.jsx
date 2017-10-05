@@ -10,7 +10,11 @@ class ChatBar extends Component {
   handleKeyPress = (event) => {
     if(event.key == 'Enter'){
       console.log('My state is: ', this.state);
-      this.props._addMessage(this.state);
+      if(this._isImageLink(this.state.content)) {
+        this._addImageMessage(this.state);
+      } else {
+        this.props._addMessage(this.state);
+      }
       this._clientNameChanged(this.state.username);
       this.setState({content: ''});
     }
@@ -22,8 +26,28 @@ class ChatBar extends Component {
         type: "postNotification",
         content: `${this.props.currentUser} has changed their name to ${username}.`
       });
+      // change currentUser from app.js
       this.props._setCurrentUser(username);
     }
+  }
+
+  _isImageLink = (content) => {
+    let parts = content.split('.');
+    let imgFileType = parts.pop().toLowerCase();
+
+    if(imgFileType === 'jpg' || imgFileType === 'png' || imgFileType === 'gif') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  _addImageMessage = (data) => {
+    this.props._addMessage({
+        type: "postImage",
+        username: data.username,
+        content: data.content
+      });
   }
 
   render() {

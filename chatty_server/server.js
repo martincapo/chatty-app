@@ -48,6 +48,10 @@ wss.on('connection', (client) => {
         _broadcast(JSON.stringify(_setNotification(msg)));
         break;
 
+      case 'postImage':
+        _broadcast(JSON.stringify(_setImageLink(msg, msgID)));
+        break;
+
       default:
         // show an error in the console if the message type is unknown
         throw new Error("Unknown event type " + msg.type);
@@ -77,6 +81,17 @@ _setMessage = (msg, msgID) => {
   // Create msg data
   return ({
     type: "incomingMessage",
+    id: msgID,
+    username: msg.username,
+    content: msg.content,
+    fontColor: msg.fontColor
+  });
+}
+
+_setImageLink = (msg, msgID) => {
+  // Create msg data
+  return ({
+    type: "incomingImage",
     id: msgID,
     username: msg.username,
     content: msg.content,
