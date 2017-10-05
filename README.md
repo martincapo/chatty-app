@@ -4,7 +4,7 @@ Chatty will allow users to communicate with each other without having to registe
 
 ## Screenshot
 
-!["Screenshot description"](chatty-app/docs/chatty-messages.png)
+!["Screenshot description"](https://github.com/martincapo/chatty-app/blob/master/docs/chatty-messages.png)
 
 
 ## Getting Started
